@@ -44,4 +44,14 @@ Thumbs.db
 *.log
 npm-debug.log*
 yarn-debug.log*
-yarn-error.log* 
+yarn-error.log*
+
+# Utility scripts
+create_*.py
+resize_*.py
+package_*.py
+
+# Documentation for submission
+store_assets.md
+privacy_practices.md
+screenshots/ 

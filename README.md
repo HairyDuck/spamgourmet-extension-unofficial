@@ -18,14 +18,6 @@ This extension allows you to quickly generate and use disposable email addresses
 - View your history of generated addresses
 - Integrates seamlessly with the Spamgourmet service
 
-## Screenshots
-
-### Main Popup Interface
-![Main Popup Interface](screenshots/popup_screenshot.png)
-
-### Context Menu Integration
-![Context Menu](screenshots/contextmenu_screenshot.png)
-
 ## Installation
 
 ### From Chrome Web Store
@@ -73,18 +65,10 @@ This project was created to provide a modern, user-friendly interface for the Sp
 ```
 ├── background.js       # Service worker for background tasks
 ├── content.js          # Content script for page interaction
-├── icons/              # Original icon source files
-├── images/             # Extension icons in various sizes
+├── icons/              # Icon files in various sizes and formats
+├── images/             # Extension icons referenced in the manifest
 ├── popup.html          # Main extension popup interface
-├── manifest.json       # Extension configuration
-└── screenshots/        # Screenshots for documentation
-```
-
-### Build and Package
-To package the extension for distribution:
-
-```
-python package_extension.py
+└── manifest.json       # Extension configuration
 ```
 
 ## Contributing
