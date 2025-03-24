@@ -89,7 +89,7 @@ python package_extension.py
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please feel free to submit a Pull Request to the [GitHub repository](https://github.com/HairyDuck/spamgourmet-extension-unofficial).
 
 ## License
 
