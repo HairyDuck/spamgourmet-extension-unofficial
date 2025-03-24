@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Spamgourmet Email Generator</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      width: 350px;
+      margin: 0;
+      padding: 16px;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .logo {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: 18px;
+      margin: 0 0 8px 0;
+      color: #333;
+    }
+    h2 {
+      font-size: 16px;
+      margin: 8px 0;
+      color: #444;
+    }
+    label {
+      display: block;
+      margin-bottom: 4px;
+      font-weight: bold;
+    }
+    input[type="text"], input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 10px 0;
+      text-align: center;
+      text-decoration: none;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 4px;
+      width: 100%;
+      margin-top: 8px;
+    }
+    .btn:hover {
+      background-color: #45a049;
+    }
+    .btn-secondary {
+      background-color: #f5f5f5;
+      border: 1px solid #ccc;
+      color: #333;
+    }
+    .btn-secondary:hover {
+      background-color: #e0e0e0;
+    }
+    .status {
+      text-align: center;
+      font-size: 14px;
+      margin-top: 16px;
+      color: #333;
+    }
+    .email-card {
+      background-color: #f5f5f5;
+      padding: 16px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: relative;
+      margin-bottom: 16px;
+    }
+    .email-label {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 6px;
+    }
+    .email-preview {
+      font-family: monospace;
+      font-size: 16px;
+      word-break: break-all;
+      background-color: white;
+      padding: 12px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      margin-right: 30px;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .copy-btn:hover {
+      opacity: 1;
+    }
+    .copy-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+    .permissions-section {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #eee;
+    }
+    .permission-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      padding: 8px;
+      background-color: #f9f9f9;
+      border-radius: 4px;
+    }
+    .success-copy {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(76, 175, 80, 0.9);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: bold;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      border-radius: 8px;
+    }
+    .success-copy.show {
+      opacity: 1;
+    }
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 16px;
+    }
+    .tab {
+      padding: 8px 16px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      font-weight: bold;
+    }
+    .tab.active {
+      border-bottom-color: #4CAF50;
+      color: #4CAF50;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .settings-section {
+      margin-top: 10px;
+      border-top: 1px solid #eee;
+      padding-top: 16px;
+    }
+    .settings-title {
+      font-weight: bold;
+      margin-bottom: 12px;
+      color: #555;
+    }
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .action-buttons .btn {
+      flex: 1;
+      margin-top: 0;
+    }
+    #use-email {
+      display: none; /* Hidden by default, shown via JS when needed */
+    }
+    /* New styles for customization options */
+    .email-parts {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 10px;
+    }
+    .email-part {
+      flex: 1;
+      padding: 8px;
+      font-family: monospace;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .email-domain {
+      flex: 0 0 auto;
+      font-family: monospace;
+      padding: 8px 0;
+      color: #666;
+    }
+    .email-reset {
+      background: none;
+      border: none;
+      color: #4CAF50;
+      cursor: pointer;
+      font-size: 12px;
+      text-decoration: underline;
+      padding: 0;
+      margin-top: 5px;
+    }
+    .slider-container {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .slider-label {
+      flex: 0 0 auto;
+      font-weight: bold;
+      font-size: 14px;
+      color: #555;
+    }
+    .slider {
+      flex: 1;
+      appearance: none;
+      width: 100%;
+      height: 4px;
+      background: #ddd;
+      outline: none;
+      border-radius: 2px;
+    }
+    .slider::-webkit-slider-thumb {
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      background: #4CAF50;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+    .slider-value {
+      flex: 0 0 25px;
+      text-align: center;
+      font-weight: bold;
+      color: #4CAF50;
+    }
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+      justify-content: space-between;
+    }
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 36px;
+      height: 20px;
+    }
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 34px;
+    }
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    input:checked + .toggle-slider {
+      background-color: #4CAF50;
+    }
+    input:checked + .toggle-slider:before {
+      transform: translateX(16px);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <h1>Spamgourmet Email Generator</h1>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" data-tab="generator">Email</div>
+      <div class="tab" data-tab="settings">Settings</div>
+      <div class="tab" data-tab="permissions">Permissions</div>
+    </div>
+
+    <div id="generator-tab" class="tab-content active">
+      <div class="email-card">
+        <div class="email-label">Generated email for this site:</div>
+        <div id="email-preview" class="email-preview">sitename.3.username@spamgourmet.com</div>
+        <button id="copy-email" class="copy-btn" title="Copy to clipboard">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+        </button>
+        <div id="copy-success" class="success-copy">Copied!</div>
+      </div>
+      
+      <!-- New customization section -->
+      <div id="customize-section" class="settings-section">
+        <div class="settings-title">Customize Email</div>
+        
+        <div class="email-parts">
+          <input type="text" id="custom-prefix" class="email-part" placeholder="prefix">
+          <div class="email-domain">.</div>
+          <input type="text" id="custom-emails" class="email-part" placeholder="3">
+          <div class="email-domain">.</div>
+          <input type="text" id="custom-username" class="email-part" placeholder="username" disabled>
+          <div class="email-domain">@spamgourmet.com</div>
+        </div>
+        <button id="reset-email" class="email-reset">Reset to default</button>
+        
+        <div class="slider-container">
+          <div class="slider-row">
+            <div class="slider-label">Max Emails:</div>
+            <input type="range" min="1" max="20" value="3" class="slider" id="email-slider">
+            <div class="slider-value" id="slider-value">3</div>
+          </div>
+          
+          <div class="toggle-container">
+            <div class="slider-label">Email Blocking:</div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="blocking-toggle" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+      
+      <div class="action-buttons">
+        <button id="use-email" class="btn">Use This Email</button>
+        <button id="copy-email-btn" class="btn">Copy to Clipboard</button>
+      </div>
+      
+      <p>Right-click on any email field and select "Generate Spamgourmet email" to show a generator.</p>
+    </div>
+
+    <div id="settings-tab" class="tab-content">
+      <div>
+        <label for="username">Your Spamgourmet Username:</label>
+        <input type="text" id="username" placeholder="e.g., spamcowboy">
+      </div>
+
+      <div>
+        <label for="max-emails">Default Max Emails:</label>
+        <input type="number" id="max-emails" min="1" max="20" value="3">
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="auto-detect" checked>
+        <label for="auto-detect">Auto-detect email fields</label>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="auto-fill" checked>
+        <label for="auto-fill">Auto-fill detected fields</label>
+      </div>
+
+      <button id="save-settings" class="btn">Save Settings</button>
+    </div>
+
+    <div id="permissions-tab" class="tab-content">
+      <h2>Extension Permissions</h2>
+      <p>Control which permissions the extension has:</p>
+
+      <div class="permission-row">
+        <div>Auto-detect on all websites</div>
+        <button id="all-sites-permission" class="btn btn-secondary">Enable</button>
+      </div>
+
+      <p>Alternatively, you can use the "Generate Spamgourmet email" option in the right-click context menu on any email field.</p>
+
+      <p>When using the context menu, you'll be asked for permission only for the current website.</p>
+    </div>
+
+    <div class="status" id="status"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html> 
