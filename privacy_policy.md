@@ -59,8 +59,7 @@ Depending on your location, you may have certain rights regarding your personal 
 
 ## Contact Us
 
-If you have any questions about this Privacy Policy, please contact us at:
-[Your contact email or website]
+If you have any questions about this Privacy Policy, please contact us on Github
 
 ---
 
