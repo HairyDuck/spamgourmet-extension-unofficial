@@ -21,7 +21,7 @@ This extension allows you to quickly generate and use disposable email addresses
 ## Installation
 
 ### From Chrome Web Store
-Search for "Spamgourmet Email Generator (Unofficial)" in the Chrome Web Store or [click here](#) (link will be added once published).
+Search for "Spamgourmet Email Generator (Unofficial)" in the Chrome Web Store or [click here](https://chromewebstore.google.com/detail/spamgourmet-email-generat/dkalglbdokegafbkedgdjfiffcobgaea)
 
 ### Manual Installation (for developers)
 1. Clone this repository
